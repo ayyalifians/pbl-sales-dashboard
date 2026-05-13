@@ -3,6 +3,10 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
+*.xlsx
+*.xls
+*.csv
+Superstore Dataset.xlsx
 .env
 venv/
 

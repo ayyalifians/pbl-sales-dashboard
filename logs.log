@@ -1,0 +1,72 @@
+2026-05-13 20:14:45,618:WARNING:
+'prophet' is a soft dependency and not included in the pycaret installation. Please run: `pip install prophet` to install.
+2026-05-13 20:14:45,906:INFO:Initializing load_model()
+2026-05-13 20:14:45,906:INFO:load_model(model_name=model_furniture, platform=None, authentication=None, verbose=True)
+2026-05-13 20:19:49,454:WARNING:
+'prophet' is a soft dependency and not included in the pycaret installation. Please run: `pip install prophet` to install.
+2026-05-13 20:19:49,720:INFO:Initializing load_model()
+2026-05-13 20:19:49,720:INFO:load_model(model_name=model_furniture, platform=None, authentication=None, verbose=True)
+2026-05-13 20:21:02,856:WARNING:
+'prophet' is a soft dependency and not included in the pycaret installation. Please run: `pip install prophet` to install.
+2026-05-13 20:21:03,173:INFO:Initializing load_model()
+2026-05-13 20:21:03,173:INFO:load_model(model_name=model_furniture, platform=None, authentication=None, verbose=True)
+2026-05-13 20:21:34,486:WARNING:
+'prophet' is a soft dependency and not included in the pycaret installation. Please run: `pip install prophet` to install.
+2026-05-13 20:21:34,816:INFO:Initializing load_model()
+2026-05-13 20:21:34,816:INFO:load_model(model_name=model_furniture, platform=None, authentication=None, verbose=True)
+2026-05-13 20:23:06,698:WARNING:
+'prophet' is a soft dependency and not included in the pycaret installation. Please run: `pip install prophet` to install.
+2026-05-13 20:23:06,938:INFO:Initializing load_model()
+2026-05-13 20:23:06,938:INFO:load_model(model_name=model_furniture, platform=None, authentication=None, verbose=True)
+2026-05-13 20:24:13,947:WARNING:
+'prophet' is a soft dependency and not included in the pycaret installation. Please run: `pip install prophet` to install.
+2026-05-13 20:24:14,178:INFO:Initializing load_model()
+2026-05-13 20:24:14,178:INFO:load_model(model_name=model_furniture, platform=None, authentication=None, verbose=True)
+2026-05-13 20:24:14,214:INFO:Initializing load_model()
+2026-05-13 20:24:14,214:INFO:load_model(model_name=model_office_supplies, platform=None, authentication=None, verbose=True)
+2026-05-13 20:24:14,226:INFO:Initializing load_model()
+2026-05-13 20:24:14,226:INFO:load_model(model_name=model_technology, platform=None, authentication=None, verbose=True)
+2026-05-13 20:25:15,957:WARNING:
+'prophet' is a soft dependency and not included in the pycaret installation. Please run: `pip install prophet` to install.
+2026-05-13 20:25:16,200:INFO:Initializing load_model()
+2026-05-13 20:25:16,201:INFO:load_model(model_name=model_furniture, platform=None, authentication=None, verbose=True)
+2026-05-13 20:25:16,238:INFO:Initializing load_model()
+2026-05-13 20:25:16,239:INFO:load_model(model_name=model_office_supplies, platform=None, authentication=None, verbose=True)
+2026-05-13 20:25:16,249:INFO:Initializing load_model()
+2026-05-13 20:25:16,249:INFO:load_model(model_name=model_technology, platform=None, authentication=None, verbose=True)
+2026-05-13 20:25:22,895:WARNING:
+'prophet' is a soft dependency and not included in the pycaret installation. Please run: `pip install prophet` to install.
+2026-05-13 20:25:23,255:INFO:Initializing load_model()
+2026-05-13 20:25:23,255:INFO:load_model(model_name=model_furniture, platform=None, authentication=None, verbose=True)
+2026-05-13 20:25:23,292:INFO:Initializing load_model()
+2026-05-13 20:25:23,292:INFO:load_model(model_name=model_office_supplies, platform=None, authentication=None, verbose=True)
+2026-05-13 20:25:23,302:INFO:Initializing load_model()
+2026-05-13 20:25:23,302:INFO:load_model(model_name=model_technology, platform=None, authentication=None, verbose=True)
+2026-05-13 20:25:23,445:INFO:Initializing load_model()
+2026-05-13 20:25:23,445:INFO:load_model(model_name=model_furniture, platform=None, authentication=None, verbose=True)
+2026-05-13 20:25:23,480:INFO:Initializing load_model()
+2026-05-13 20:25:23,480:INFO:load_model(model_name=model_office_supplies, platform=None, authentication=None, verbose=True)
+2026-05-13 20:25:23,488:INFO:Initializing load_model()
+2026-05-13 20:25:23,488:INFO:load_model(model_name=model_technology, platform=None, authentication=None, verbose=True)
+2026-05-13 20:29:29,437:WARNING:
+'prophet' is a soft dependency and not included in the pycaret installation. Please run: `pip install prophet` to install.
+2026-05-13 20:29:29,740:INFO:Initializing load_model()
+2026-05-13 20:29:29,741:INFO:load_model(model_name=model_furniture, platform=None, authentication=None, verbose=True)
+2026-05-13 20:29:29,786:INFO:Initializing load_model()
+2026-05-13 20:29:29,786:INFO:load_model(model_name=model_office_supplies, platform=None, authentication=None, verbose=True)
+2026-05-13 20:29:29,798:INFO:Initializing load_model()
+2026-05-13 20:29:29,798:INFO:load_model(model_name=model_technology, platform=None, authentication=None, verbose=True)
+2026-05-13 20:29:37,864:WARNING:
+'prophet' is a soft dependency and not included in the pycaret installation. Please run: `pip install prophet` to install.
+2026-05-13 20:29:38,145:INFO:Initializing load_model()
+2026-05-13 20:29:38,145:INFO:load_model(model_name=model_furniture, platform=None, authentication=None, verbose=True)
+2026-05-13 20:29:38,184:INFO:Initializing load_model()
+2026-05-13 20:29:38,184:INFO:load_model(model_name=model_office_supplies, platform=None, authentication=None, verbose=True)
+2026-05-13 20:29:38,199:INFO:Initializing load_model()
+2026-05-13 20:29:38,199:INFO:load_model(model_name=model_technology, platform=None, authentication=None, verbose=True)
+2026-05-13 20:29:38,335:INFO:Initializing load_model()
+2026-05-13 20:29:38,336:INFO:load_model(model_name=model_furniture, platform=None, authentication=None, verbose=True)
+2026-05-13 20:29:38,381:INFO:Initializing load_model()
+2026-05-13 20:29:38,381:INFO:load_model(model_name=model_office_supplies, platform=None, authentication=None, verbose=True)
+2026-05-13 20:29:38,394:INFO:Initializing load_model()
+2026-05-13 20:29:38,394:INFO:load_model(model_name=model_technology, platform=None, authentication=None, verbose=True)
