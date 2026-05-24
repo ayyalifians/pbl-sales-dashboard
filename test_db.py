@@ -1,7 +1,7 @@
 # api/main.py
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from api.routers import predict, dashboard   # ← hapus 'data' dulu
+from api.routers import predict, dashboard
 
 app = FastAPI(
     title="Sales Forecasting API - Kelompok 6",
@@ -17,9 +17,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Routers — fokus prioritas 1 dulu
 app.include_router(predict.router)
-app.include_router(dashboard.router)   # ← ini yang penting untuk Aisyah
+app.include_router(dashboard.router)
 
 @app.get("/", tags=["General"])
 async def root():

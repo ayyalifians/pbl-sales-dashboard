@@ -29,7 +29,7 @@ async def get_sales_history(
             SELECT
                 o.order_date,
                 p.category,
-                p.subcategory,
+                p.sub_category,
                 SUM(o.sales)    AS total_sales,
                 SUM(o.profit)   AS total_profit,
                 COUNT(*)        AS total_orders
@@ -47,7 +47,7 @@ async def get_sales_history(
             query  += " AND EXTRACT(YEAR FROM o.order_date) = :year"
             params['year'] = year
 
-        query += " GROUP BY o.order_date, p.category, p.subcategory ORDER BY o.order_date"
+        query += " GROUP BY o.order_date, p.category, p.sub_category ORDER BY o.order_date"
 
         result = db.execute(query, params).fetchall()
         data   = [dict(row._mapping) for row in result]
