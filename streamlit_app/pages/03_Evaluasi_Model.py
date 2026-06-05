@@ -13,7 +13,7 @@ from _theme_helper import (
     section_label, status_badge,
     ACCENT, ACCENT2, CAT_COLORS, VALID_CATEGORIES, MODEL_LABEL
 )
-from api_client import check_health, fetch_metrics
+from utils.api_client import check_health, fetch_metrics
 
 inject_global_css()
 render_toggle()

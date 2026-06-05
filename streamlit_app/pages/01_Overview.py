@@ -13,7 +13,7 @@ from _theme_helper import (
     section_label, status_badge, card_wrap,
     ACCENT, ACCENT2, CAT_COLORS, VALID_CATEGORIES
 )
-from api_client import check_health, fetch_summary, fetch_sales_monthly, fetch_sales_by_category
+from utils.api_client import check_health, fetch_summary, fetch_sales_monthly, fetch_sales_by_category
 
 inject_global_css()
 render_toggle()

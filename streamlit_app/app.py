@@ -18,7 +18,7 @@ from _theme_helper import (
     section_label, card_wrap, status_badge,
     ACCENT, ACCENT2, CAT_COLORS
 )
-from api_client import check_health
+from utils.api_client import check_health
 
 inject_global_css()
 render_toggle()

@@ -15,7 +15,7 @@ from _theme_helper import (
     section_label, info_banner, status_badge, card_wrap,
     ACCENT, ACCENT2, CAT_COLORS, VALID_CATEGORIES, MODEL_LABEL
 )
-from api_client import check_health, fetch_forecast, fetch_sales_monthly
+from utils.api_client import check_health, fetch_forecast, fetch_sales_monthly
 
 inject_global_css()
 render_toggle()
