@@ -3,6 +3,7 @@ from fastapi import APIRouter, HTTPException
 from api.ml_loader import load_model_data, load_forecast_data
 from api.schemas import PredictRequest, PredictResponse
 import numpy as np
+import traceback
 
 router = APIRouter(
     prefix="/predict",
@@ -128,6 +129,8 @@ async def get_forecast(category: str):
     except FileNotFoundError as e:
         raise HTTPException(status_code=404, detail=str(e))
     except Exception as e:
+        print(f"ERROR forecast {category}:")
+        print(traceback.format_exc()) 
         raise HTTPException(status_code=500, detail=f"Error forecast: {str(e)}")
 
 
