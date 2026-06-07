@@ -1,19 +1,26 @@
 """
 utils/api_client.py
 Komunikasi ke FastAPI backend.
-Base URL: http://localhost:8000
+Base URL menyesuaikan environment (Lokal, Docker, atau Railway).
 """
 
+import os
 import requests
 import streamlit as st
 
-API_BASE = "http://localhost:8000"
+# Ambil dari environment variable
+# - Saat Docker: API_URL = http://api:8000 (dari docker-compose)
+# - Saat Railway: API_URL = https://railway-url (set manual)
+# - Saat lokal: API_URL = http://localhost:8000 (default)
+API_BASE = os.getenv("API_URL", "http://localhost:8000")
+
 VALID_CATEGORIES = ["Furniture", "Office Supplies", "Technology"]
 
 
 def check_health() -> bool:
     try:
-        r = requests.get(f"{API_BASE}/dashboard/summary", timeout=3)
+        # Mengubah endpoint ke /health agar lebih ringan dan sesuai standar pengecekan server
+        r = requests.get(f"{API_BASE}/health", timeout=3)
         return r.status_code == 200
     except Exception:
         return False
