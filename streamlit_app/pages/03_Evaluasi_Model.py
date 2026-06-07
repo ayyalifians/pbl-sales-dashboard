@@ -51,7 +51,7 @@ st.markdown(f"<p style='color:{t['muted']};font-size:0.875rem;margin-top:-0.5rem
             "Perbandingan performa model prediksi — MAE, RMSE, MAPE, R²</p>",
             unsafe_allow_html=True)
 
-# Load metrik
+# Load metrik menggunakan blok try-except bawaan yang sudah benar
 all_metrics = {}
 load_errors = []
 prog = st.progress(0, text="Memuat metrik dari API…")
@@ -100,10 +100,12 @@ def build_rows(metric_key):
 tab_val, tab_test = st.tabs(["📊 Validation", "🧪 Test"])
 with tab_val:
     df_v = build_rows("val_metrics")
-    st.dataframe(df_v if not df_v.empty else pd.DataFrame(), use_container_width=True, hide_index=True)
+    # FIX: Ganti use_container_width menjadi width="stretch"
+    st.dataframe(df_v if not df_v.empty else pd.DataFrame(), width="stretch", hide_index=True)
 with tab_test:
     df_te = build_rows("test_metrics")
-    st.dataframe(df_te if not df_te.empty else pd.DataFrame(), use_container_width=True, hide_index=True)
+    # FIX: Ganti use_container_width menjadi width="stretch"
+    st.dataframe(df_te if not df_te.empty else pd.DataFrame(), width="stretch", hide_index=True)
 
 st.divider()
 
@@ -148,8 +150,9 @@ if sel in all_metrics:
             title=dict(text=f"MAE & RMSE — {sel}",
                        font=dict(size=13,family="Syne",color=t["text"]),x=0),
             plot_bgcolor=t["plot_bg"], paper_bgcolor=t["plot_paper"],
+            # FIX: Ganti titlefont menjadi title=dict(text="Rp", font=dict(...))
             yaxis=dict(tickformat=",.0f", showgrid=True, gridcolor=t["grid"],
-                       title="Rp", titlefont=dict(color=t["tick"]),
+                       title=dict(text="Rp", font=dict(color=t["tick"])),
                        tickfont=dict(color=t["tick"])),
             xaxis=dict(showgrid=False, tickfont=dict(color=t["tick"])),
             legend=dict(orientation="h", yanchor="bottom", y=1.02,
@@ -157,4 +160,5 @@ if sel in all_metrics:
             margin=dict(l=10,r=10,t=50,b=10),
             font=dict(family="DM Sans", color=t["text"]),
         )
-        st.plotly_chart(fig, use_container_width=True)
+        # FIX: Ganti use_container_width menjadi width="stretch"
+        st.plotly_chart(fig, width="stretch")
