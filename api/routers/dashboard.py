@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import text
 from fastapi import Depends
 from typing import Optional
+from api.ml_loader import load_model_data
 
 router = APIRouter(
     prefix="/dashboard",
@@ -189,3 +190,97 @@ async def get_top_products(
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error top products: {str(e)}")
+    
+
+# ════════════════════════════════
+#   ENDPOINT: MODEL METRICS (BARU)
+# ════════════════════════════════
+
+@router.get(
+    "/metrics",
+    summary="Get All Model Metrics",
+    description="Ambil metrics evaluasi semua model (MAE, RMSE, MAPE, R2, RMSSE)"
+)
+async def get_all_metrics():
+    categories = ["Furniture", "Office Supplies", "Technology"]
+    result = {}
+
+    for cat in categories:
+        try:
+            data = load_model_data(cat)
+            result[cat] = {
+                "model_type": data['type'],
+                "val_metrics": {
+                    k: float(v) for k, v in data['val_metrics'].items()
+                },
+                "test_metrics": {
+                    k: float(v) for k, v in data['test_metrics'].items()
+                },
+                "params": data['params']
+            }
+        except FileNotFoundError:
+            result[cat] = {
+                "error": f"Model file untuk {cat} tidak ditemukan"
+            }
+        except Exception as e:
+            result[cat] = {
+                "error": str(e)
+            }
+
+    return {
+        "status": "success",
+        "data"  : result
+    }
+
+
+@router.get(
+    "/metrics/{category}",
+    summary="Get Model Metrics by Category",
+    description="Ambil metrics evaluasi model untuk kategori tertentu"
+)
+async def get_metrics_by_category(category: str):
+
+    # Normalisasi nama kategori
+    # Agar bisa terima: "office-supplies", "office_supplies", "Office Supplies"
+    category_map = {
+        "furniture"       : "Furniture",
+        "office supplies" : "Office Supplies",
+        "office-supplies" : "Office Supplies",
+        "office_supplies" : "Office Supplies",
+        "officesupplies"  : "Office Supplies",
+        "technology"      : "Technology",
+    }
+
+    # Normalize input
+    cat_key = category_map.get(category.lower().strip())
+
+    if not cat_key:
+        raise HTTPException(
+            status_code=400,
+            detail=(
+                f"Kategori '{category}' tidak valid. "
+                f"Pilihan: Furniture, Office Supplies, Technology"
+            )
+        )
+
+    try:
+        data = load_model_data(cat_key)
+        return {
+            "status"      : "success",
+            "category"    : cat_key,
+            "model_type"  : data['type'],
+            "val_metrics" : {k: float(v) for k, v in data['val_metrics'].items()},
+            "test_metrics": {k: float(v) for k, v in data['test_metrics'].items()},
+            "params"      : data['params']
+        }
+
+    except FileNotFoundError:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Model file untuk kategori '{cat_key}' tidak ditemukan"
+        )
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Error load model: {str(e)}"
+        )

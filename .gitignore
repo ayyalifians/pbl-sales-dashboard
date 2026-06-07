@@ -3,6 +3,10 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
+*.xlsx
+*.xls
+*.csv
+Superstore Dataset.xlsx
 .env
 venv/
 
@@ -13,6 +17,9 @@ data/processed/*
 !data/raw/.gitkeep
 !data/interim/.gitkeep
 !data/processed/.gitkeep
+
+# MLflow
+mlruns/
 
 # Jupyter
 .ipynb_checkpoints/
