@@ -1,13 +1,10 @@
-version: '3.8'
-
 services:
-
-  # ── Container 1: ML Model (FastAPI & pickle) ──────────────────────────
-  ml_api:
-    build:
+  # ── Container 1: ML Model (Membungkus FastAPI & File .pkl) ──
+  ml_model:
+    build: 
       context: .
       dockerfile: Dockerfile
-    container_name: pbl_ml_api
+    container_name: pbl_ml_model
     ports:
       - "8000:8000"
     environment:
@@ -19,7 +16,7 @@ services:
     env_file:
       - .env
     volumes:
-      - ./models:/app/models   # mount folder models
+      - ./models:/app/models
     networks:
       - pbl_network
     restart: unless-stopped
@@ -29,26 +26,27 @@ services:
       timeout: 10s
       retries: 3
 
-  # ── Container 2: Web Dashboard: Streamlit ────────────────────────
+  # ── Container 2: Web Dashboard (Membungkus Streamlit) ───────
   web:
-    build:
+    build: 
       context: .
       dockerfile: Dockerfile.streamlit
-    container_name: pbl_streamlit
+    container_name: pbl_web
     ports:
       - "8501:8501"
     environment:
-      - API_URL=http://api:8000   # pakai nama service, bukan localhost!
+      # URL mengarah ke nama service baru: ml_model
+      - API_URL=http://ml_model:8000
     env_file:
       - .env
     networks:
       - pbl_network
     depends_on:
-      api:
+      # Di sini letak error sebelumnya, sekarang sudah diubah ke ml_model
+      ml_model:
         condition: service_healthy
     restart: unless-stopped
 
-# ── Network ───────────────────────────────────────
 networks:
   pbl_network:
     driver: bridge
