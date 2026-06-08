@@ -14,10 +14,18 @@ DB_PORT = os.getenv("DB_PORT", "6543")  # Sudah benar default-nya 6543
 DB_NAME = os.getenv("DB_NAME")
 
 # Validasi — tidak ada fallback ke hardcode
-if not all([DB_USER, DB_PASSWORD, DB_HOST, DB_NAME]):
+missing_vars = [
+    k for k, v in {
+        "DB_USER"    : DB_USER,
+        "DB_PASSWORD": DB_PASSWORD,
+        "DB_HOST"    : DB_HOST,
+    }.items() if not v
+]
+
+if missing_vars:
     raise ValueError(
-        "Environment variables DB tidak lengkap. "
-        "Pastikan .env sudah diisi dengan benar."
+        f"Environment variables tidak lengkap: {missing_vars}\n"
+        f"Pastikan .env sudah diisi dengan benar."
     )
 
 DATABASE_URL = (
@@ -25,16 +33,13 @@ DATABASE_URL = (
     f"@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 )
 
-# --- PERBAIKAN DI BAGIAN INI ---
 engine = create_engine(
-    DATABASE_URL,
+DATABASE_URL,
     connect_args={
         "connect_timeout": 30,             # Menghindari timeout jika internet melambat
         "options": "-c prepare_threshold=0" # WAJIB agar tidak bentrok dengan Transaction Pooler Supabase
     }
 )
-# -------------------------------
-
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
