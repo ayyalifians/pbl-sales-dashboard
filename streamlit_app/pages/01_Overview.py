@@ -99,6 +99,9 @@ metric_col = {"Sales":"total_sales","Profit":"total_profit","Jumlah Order":"num_
 fig = go.Figure()
 if not df.empty:
     df["ym"] = df["year"].astype(str)+"-"+df["month"].astype(str).str.zfill(2)
+    # Aggregate per bulan per kategori — hindari duplikat titik di linechart
+    agg_cols = {k:"sum" for k in ["total_sales","total_profit","num_orders"] if k in df.columns}
+    df = df.groupby(["category","ym"], as_index=False).agg(agg_cols)
     cats = VALID_CATEGORIES if cat_opt=="Semua" else [cat_opt]
     for cat in cats:
         d = df[df["category"]==cat].sort_values("ym")
@@ -145,12 +148,17 @@ with cl:
         insidetextfont=dict(color="#FFFFFF"),
         outsidetextfont=dict(color=t["text"]),
     ))
-    fig_pie.update_traces(textposition="outside")
+    fig_pie.update_traces(
+        textposition="inside",
+        textinfo="percent",
+        insidetextorientation="radial",
+    )
     fig_pie.update_layout(
         title=dict(text="Distribusi Sales", font=dict(size=13,family="Syne",color=t["text"]),x=0),
         height=300, showlegend=True,
-        legend=dict(font=dict(color=t["text"],size=11), orientation="h", y=-0.12),
-        margin=dict(l=0,r=0,t=40,b=40),
+        legend=dict(font=dict(color=t["text"],size=11), orientation="h", y=-0.15,
+                    xanchor="center", x=0.5),
+        margin=dict(l=60,r=60,t=40,b=70),
         paper_bgcolor=t["plot_paper"],
     )
     st.plotly_chart(fig_pie, use_container_width=True)
@@ -162,11 +170,20 @@ with cr:
         color = CAT_COLORS.get(cat,"#6B7280")
         fig_sc.add_trace(go.Scatter(
             x=[row["total_sales"]], y=[row["total_profit"]],
-            mode="markers+text", name=cat,
-            text=[cat], textposition="top center",
-            textfont=dict(size=11, color=t["text"]),
-            marker=dict(size=26, color=color, opacity=0.85,
+            mode="markers", name=cat,
+            marker=dict(size=20, color=color, opacity=0.9,
                         line=dict(width=2, color=t["plot_bg"])),
+            hovertemplate=f"<b>{cat}</b><br>Sales: %{{x:,.0f}}<br>Profit: %{{y:,.0f}}<extra></extra>",
+        ))
+    # Tambah anotasi nama kategori manual — tidak duplikat di legend
+    annotations = []
+    for _, row in df_cat.iterrows():
+        annotations.append(dict(
+            x=row["total_sales"], y=row["total_profit"],
+            text=row["category"],
+            showarrow=False,
+            yshift=18,
+            font=dict(size=11, color=t["text"], family="DM Sans"),
         ))
     fig_sc.update_layout(
         title=dict(text="Sales vs Profit per Kategori",
@@ -175,13 +192,21 @@ with cr:
         plot_bgcolor=t["plot_bg"], paper_bgcolor=t["plot_paper"],
         xaxis=dict(title="Total Sales", tickformat=",.0f", showgrid=True,
                    gridcolor=t["grid"], tickfont=dict(size=10,color=t["tick"]),
-                   titlefont=dict(color=t["tick"])),
+                   title_font=dict(color=t["tick"])),
         yaxis=dict(title="Total Profit", tickformat=",.0f", showgrid=True,
                    gridcolor=t["grid"], tickfont=dict(size=10,color=t["tick"]),
-                   titlefont=dict(color=t["tick"])),
-        legend=dict(orientation="h", yanchor="bottom", y=1.02,
-                    font=dict(size=11,color=t["text"])),
-        margin=dict(l=10,r=10,t=45,b=10),
+                   title_font=dict(color=t["tick"])),
+        showlegend=True,
+        legend=dict(
+            orientation="h",
+            yanchor="top", y=-0.22,
+            xanchor="center", x=0.5,
+            font=dict(size=10, color=t["text"]),
+            itemsizing="constant",
+            tracegroupgap=0,
+        ),
+        annotations=annotations,
+        margin=dict(l=10, r=10, t=45, b=70),
         font=dict(family="DM Sans",color=t["text"]),
     )
     st.plotly_chart(fig_sc, use_container_width=True)
