@@ -1,5 +1,4 @@
 # api/main.py
-from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -20,11 +19,20 @@ logger = logging.getLogger(__name__)
 
 
 # ---------------------------------------------------------------------------
-# Lifespan: startup + shutdown hooks
+# App instance
 # ---------------------------------------------------------------------------
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    # ── STARTUP ──────────────────────────────────────────────────────────
+app = FastAPI(
+    title="Sales Forecasting API - Kelompok 6",
+    description="API prediksi penjualan berbasis Machine Learning (PyCaret Time Series)",
+    version="1.0.0",
+)
+
+
+# ---------------------------------------------------------------------------
+# Startup + shutdown event handlers
+# ---------------------------------------------------------------------------
+@app.on_event("startup")
+async def startup_event():
     logger.info("=== Application starting up ===")
     db_status = check_db_connection()
     if db_status["status"] == "connected":
@@ -41,22 +49,15 @@ async def lifespan(app: FastAPI):
         )
     logger.info("=== Application started successfully ===")
 
-    yield  # aplikasi berjalan di sini
 
-    # ── SHUTDOWN ─────────────────────────────────────────────────────────
+@app.on_event("shutdown")
+async def shutdown_event():
     logger.info("=== Application shutting down ===")
 
 
 # ---------------------------------------------------------------------------
-# App instance
+# Middleware
 # ---------------------------------------------------------------------------
-app = FastAPI(
-    title="Sales Forecasting API - Kelompok 6",
-    description="API prediksi penjualan berbasis Machine Learning (PyCaret Time Series)",
-    version="1.0.0",
-    lifespan=lifespan,
-)
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
