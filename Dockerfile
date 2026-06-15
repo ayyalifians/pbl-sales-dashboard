@@ -24,4 +24,4 @@ EXPOSE 8000
 
 # Jalankan validate_env dulu (--warn: tidak crash jika ada var hilang, hanya log),
 # lalu start Uvicorn. Output validate_env akan terlihat di Railway deploy logs.
-CMD ["sh", "-c", "python validate_env.py --warn && uvicorn api.main:app --host 0.0.0.0 --port 8000 --log-level info"]
+CMD ["sh", "-c", "python validate_env.py --warn && uvicorn api.main:app --host 0.0.0.0 --port 8000 --log-level debug"]
