@@ -2,7 +2,8 @@
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from api.routers import predict, dashboard
+# DEBUG: routers temporarily disabled to isolate 502/hang issue
+# from api.routers import predict, dashboard
 from database.connection import check_db_connection
 import logging
 import sys
@@ -89,10 +90,13 @@ async def unhandled_exception_handler(request: Request, exc: Exception):
 
 
 # ---------------------------------------------------------------------------
-# Routers
+# Routers — DISABLED for debug (isolating 502/hang after startup)
+# Uncomment one at a time to identify which router causes the hang:
+#   1. Uncomment predict.router first, redeploy, test
+#   2. If OK, uncomment dashboard.router as well
 # ---------------------------------------------------------------------------
-app.include_router(predict.router)
-app.include_router(dashboard.router)
+# app.include_router(predict.router)
+# app.include_router(dashboard.router)
 
 
 # ---------------------------------------------------------------------------
